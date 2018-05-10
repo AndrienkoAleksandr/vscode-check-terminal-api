@@ -20,15 +20,28 @@ export function activate(context: vscode.ExtensionContext) {
         // Display a message box to the user
         vscode.window.showInformationMessage('Test terminal api.');
         console.log("Create new terminal.");
-        const term = vscode.window.createTerminal({cwd: "/home/antey/projects"});
+        const term = vscode.window.createTerminal({cwd: "/home/user/projects"});
         term.show();
         term.sendText("clear && echo Terminal was created with help extension api and will be hidden after 5 sec." +
         " Then we will show terminal again after 5 sec. Then we will distroy terminal after 5 sec.");
         setTimeout(function() {
             term.hide();
             setTimeout(function() {
+                const listener = (t: Terminal) => {
+                    console.log("Who");
+                };
+                // term.processId.then(id => {
+                //     vscode.window.onDidCloseTerminal(async (term) => {
+                //         const curId = await term.processId;
+                //         if (curId === id) {
+                //             console.log("test ", id);
+                //         }
+                //     }, id);
+                // });
+                term.dispose();
                 term.show();
-                setTimeout(function(){term.dispose();}, 5000);
+                setTimeout(
+                    function(){term.dispose();},5000);
             }, 5000);
         }, 5000);
         
